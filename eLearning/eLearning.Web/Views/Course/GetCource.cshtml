@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "GetCource";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@using eLearning.Common;
+@using eLearning.Core.Entities
+@model Course
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+                <h4>Update Course</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    <form asp-action="UpdateCourse" asp-controller="Course" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <h4 class="text-muted m-b-15 f-s-12">Name</h4>
+                            <input type="text" class="form-control input-flat " placeholder="Enter course name" name="Name" value="@Model.Name">
+                            <input type="text" class="form-control input-flat " placeholder="Enter course name" hidden name="Id" value="@Model.Id">
+                        </div>
+                        <div class="form-group">
+                            <h4 class="text-muted m-b-15 f-s-12">Order</h4>
+                            <input type="number" class="form-control input-flat" placeholder="Order" name="Order" value="@Model.Order">
+                        </div>
+                        <div class="form-group">
+                            <h4 class="text-muted m-b-15 f-s-12">Description</h4>
+                            <textarea name="Description"></textarea>
+                            <script>
+                                CKEDITOR.replace('Description', {
+
+                                });
+                            </script>
+                        </div>
+                        <div class="form-group">
+                            <h4 class="text-muted m-b-15 f-s-12">Image</h4>
+                            <input type="file" class="form-control input-flat" placeholder="Input Rounded" name="File">
+                        </div>
+                        <div class="form-group">
+                            <h4 class="text-muted m-b-15 f-s-12">Type</h4>
+                            <select class="form-control" name="Group">
+                                <option value="1">Grammar</option>
+                                <option value="2">Tutorial</option>
+                            </select>
+                        </div>
+                        @* @await Html.PartialAsync("~/Pages/Shared/_ChildTeachers.cshtml", Model)*@
+                        <button type="submit" class="btn btn-primary btn-flat">Update Course</button>
+                        <button class="btn btn-danger btn-flat">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+                <h4>Lessions in Course </h4>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-primary btn-flat" href="/Lession/AddLession?id=@Model.Id">Create Lession in Course</a>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                                @{ int orderL = 1;}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var lession in Model.Lessions)
+                            {
+                                <tr>
+                                    <th scope="row">@(orderL++)</th>
+                                    <td>@lession.Name</td>
+                                    <td>@lession.CreatedAt.ToFormat()</td>
+                                    <td>
+                                        <strong><span class="ti-trash text-danger"></span></strong>
+                                        <strong><span class="ti-pencil text-success"></span></strong>
+                                    </td>
+                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

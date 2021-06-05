@@ -1,0 +1,11 @@
+﻿@using eLearning.Core.Entities
+@model IEnumerable<Teacher>
+<div class="form-group">
+    <h4 class="text-muted m-b-15 f-s-12">Teacher</h4>
+    <select class="form-control" name="TeacherId">
+        @foreach (var tea in Model)
+        {
+            <option value="@tea.Id">@tea.Name</option>
+        }
+    </select>
+</div>
